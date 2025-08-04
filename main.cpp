@@ -2,12 +2,13 @@
 #include <conio.h>
 #include <sstream>
 #include <windows.h>
+#include <cstdlib> // 添加system函数所需的头文件
 
 using namespace std;
 
 const int MAX_ITEMS = 19;
-const int DEFAULT_WORK_TIME = 1500;
-const int DEFAULT_REST_TIME = 300;
+const int DEFAULT_WORK_TIME = 1500;  // 测试用较短时间
+const int DEFAULT_REST_TIME = 300;   // 测试用较短时间
 
 int showMenu() {
     char choice;
@@ -90,6 +91,13 @@ void runTimer(const string& listName, string formSurface[][3], int formBackend[]
 
             displayForm(listName, formSurface);
         }
+
+        // 计时结束后启动alarm.exe
+        system("alarm.exe");
+
+        // 更新完成状态
+        formSurface[i][0] = "是";
+        displayForm(listName, formSurface);
     }
 }
 
@@ -122,7 +130,11 @@ void createSchedule() {
 }
 
 void showHelp() {
-    system("WaveTimeHelp.docx");
+    // 这里添加打开帮助文档的代码
+    // 例如：system("start WaveTimeHelp.docx");
+    cout << "\033c帮助功能开发中..." << endl;
+    cout << "按任意键返回主菜单...";
+    getch();
 }
 
 
