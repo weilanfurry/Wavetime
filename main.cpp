@@ -2,7 +2,8 @@
 #include <conio.h>
 #include <sstream>
 #include <windows.h>
-#include <cstdlib> // 添加system函数所需的头文件
+#include <cstdlib>
+#include <ShellAPI.h>
 
 using namespace std;
 
@@ -92,8 +93,15 @@ void runTimer(const string& listName, string formSurface[][3], int formBackend[]
             displayForm(listName, formSurface);
         }
 
-        // 计时结束后启动alarm.exe
-        system("alarm.exe");
+        // 我真是服了你了微软，原来的程序能和其他程序合并成一个窗口，我都不知道哪里新加的鬼功能
+        ShellExecute(
+            NULL,           // 无父窗口
+            "open",         // 执行操作
+            "alarm.exe",    // 目标程序
+            NULL,           // 无参数
+            NULL,           // 使用当前工作目录
+            SW_SHOWNA       // 关键：显示但不激活窗口
+        );
 
         // 更新完成状态
         formSurface[i][0] = "是";
